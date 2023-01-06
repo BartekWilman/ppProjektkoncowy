@@ -15,7 +15,7 @@ namespace projektKoncowy
         //imiona trudnych bokserów
         public static string[] hardBoxersNames = { "George St. Pierre", "Son Goku", "Muhammad Ali", "Cassius Clay", "One Punch Man", "Evander Holyfield", "Gotrek Gurnisson" };
         //rozpoczęcie akcji
-        public static string[] beginning = { "rozpoczął ofensywę wytaczająć swój", "zaczął akcję od", "idzie do przodu", "wyprowadza atak mocny" };
+        public static string[] beginning = { "rozpoczął ofensywę wytaczająć swój", "zaczął akcję od", "idzie do przodu", "wyprowadza atak, mocny" };
 
         //możliwe ataki
         public static string[] moves = { "Prawy prosty", "Lewy prosty", "Prawy sierpowy", "Lewy sierpowy", "Prawy podbródkowy", "Lewy podbródkowy" };
