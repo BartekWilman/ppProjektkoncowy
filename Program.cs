@@ -19,6 +19,8 @@ namespace projektKoncowy
         public static int skillPoints = 0;
         //wygrane
         public static int wins = 0;
+
+        public static bool fightWithTyson = false;
         public static string GenerateLine(Boxers.Boxer i, int skillPoints, int wins)
         {
             return $"{i.name};{i.strenght};{i.condition};{i.speed};{i.attack};{i.defense};{skillPoints};{wins}";
@@ -118,7 +120,7 @@ namespace projektKoncowy
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.D1:
-                        if(wins == 200)
+                        if(wins == 200 && fightWithTyson == false)
                         {
                             Console.WriteLine("Walczysz z mistrzem Mikiem Tysonem?\n1 - Tak\n2 - Nie");
                             switch(Console.ReadKey(true).Key)
@@ -129,14 +131,17 @@ namespace projektKoncowy
                                     if(wins == 201)
                                     {
                                         Console.WriteLine(StringLists.winWithTyson);
+                                        fightWithTyson = true;
                                     }
                                     else
                                     {
                                         Console.WriteLine(StringLists.defeatWithTyson);
+                                        fightWithTyson = true;
                                     }
                                     break;
                                     case ConsoleKey.D2:
                                     Console.WriteLine(StringLists.rejectionOfTheFight);
+                                    fightWithTyson = true;
                                     break;
                             }
                         }
