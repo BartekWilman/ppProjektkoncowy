@@ -59,59 +59,105 @@ namespace projektKoncowy
             return enemy;
         }
         //trening
-        public static void Training(ref Boxer i, ref int skillPoints)
+        public static void Training(ref Boxer i, ref int skillPoints, int skillProgress)
         {
-            Console.WriteLine("Co chcesz trenować?");
-            bool end = false;
-            Console.WriteLine("1 - szybkość\n2 - siłę\n3 - wytrzymałość\n4 - atak\n5 - obronę\n0 - nic");
-            while (skillPoints > 0 && end == false)
-            {
+                
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.D1:
-                        Console.WriteLine("Zwiększono szybkość");
-                    i.speed += 1;
-                    skillPoints -= 1;
+                        Console.WriteLine($"Zwiększono szybkość o {skillProgress}");
+                    i.speed += skillProgress;
+                    skillPoints -= skillProgress;
                         break;
                 case ConsoleKey.D2:
-                
-                    Console.WriteLine("Zwiększono siłę");
-                    i.strenght += 1;
-                    skillPoints -= 1;
+                    double potentialStrenght = (i.strenght + skillProgress) * 1.5;
+                        if (potentialStrenght >= (i.condition * 100))
+                        {
+                            Console.WriteLine("Nie możesz przesadzać z treningiem siłowym, bo nie będziesz w stanie udeżyć");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Zwiększono siłę o {skillProgress}");
+                            i.strenght += skillProgress;
+                            skillPoints -= skillProgress;
+                        }
                         break;
 
                     case ConsoleKey.D3:
-                    Console.WriteLine("Zwiększono wytrzymałość");
-                    i.condition += 1;
-                    skillPoints -= 1;
+                    Console.WriteLine($"Zwiększono wytrzymałość o {skillProgress}");
+                    i.condition += skillProgress;
+                    skillPoints -= skillProgress;
                         break;
                         case ConsoleKey.D4:
-                        Console.WriteLine("Zwiększono atak");
-                        i.attack+= 1;
-                        skillPoints -= 1;
+                        Console.WriteLine($"Zwiększono atak o {skillProgress}");
+                        i.attack+= skillProgress;
+                        skillPoints -= skillProgress;
                         break;
                         case ConsoleKey.D5:
-                        Console.WriteLine("Zwiększono obronę");
-                        i.defense+= 1;
-                        skillPoints -= 1;
-                        break;
-                        case ConsoleKey.D0:
-                        Console.WriteLine("Koniec sesji treningowej");
-                        end = true;
+                        Console.WriteLine($"Zwiększono obronę o {skillProgress}");
+                        i.defense+= skillProgress;
+                        skillPoints -= skillProgress;
                         break;
                 }
-                
-
-            }
-            if (skillPoints == 0)
+        }
+        //turbotrening
+        public static void TurboTraining(ref Boxer i, ref int skillPoints)
+        {
+            bool end = true;
+            while (skillPoints > 0 &&  end == true)
             {
-                Console.WriteLine("Brakuje Ci punktów umiejętności, wygraj więcej walk by je zdobyć");
-                Console.WriteLine("Zakończono trening");
+                Console.WriteLine("Co chcesz trenować?");
+                Console.WriteLine("1 - szybkość\n2 - siłę\n3 - wytrzymałość\n4 - atak\n5 - obronę");
+                if (skillPoints < 100)
+                {
+                    Training(ref i, ref skillPoints, 1);
+                    Console.WriteLine("Trenować dalej?\n1 - Tak\n2 - nie");
+                    switch (Console.ReadKey(true).Key)
+                    {
+                        case ConsoleKey.D1:
+                            break;
+                            case ConsoleKey.D2:
+                            end = false;
+                            break;
+                    }
+                }
+                else if (skillPoints > 100 && skillPoints < 1000)
+                {
+                    Training(ref i, ref skillPoints, 10);
+                    Console.WriteLine("Trenować dalej?\n1 - Tak\n2 - nie");
+                    switch (Console.ReadKey(true).Key)
+                    {
+                        case ConsoleKey.D1:
+                            break;
+                        case ConsoleKey.D2:
+                            end = false;
+                            break;
+                    }
+                }
+                else if (skillPoints > 1000)
+                {
+                    Training(ref i, ref skillPoints, 100);
+                    Console.WriteLine("Trenować dalej?\n1 - Tak\n2 - nie");
+                    switch (Console.ReadKey(true).Key)
+                    {
+                        case ConsoleKey.D1:
+                            break;
+                        case ConsoleKey.D2:
+                            end = false;
+                            break;
+                    }
+                }
             }
-            else
-            {
-                Console.WriteLine("Zakończono trening");
-            }
+                if (skillPoints == 0)
+                {
+                    Console.WriteLine("Brakuje Ci punktów umiejętności, wygraj więcej walk by je zdobyć");
+                    Console.WriteLine("Zakończono trening");
+                }
+                else
+                {
+                    Console.WriteLine("Zakończono trening");
+                }
+            
         }
     }
 }

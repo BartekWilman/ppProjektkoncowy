@@ -47,6 +47,7 @@ namespace projektKoncowy
                     //gracz ma inicjatywę
                     if ((fighter1.speed * fighter1Oxygen) > (fighter2.speed * fighter2Oxygen))
                     {
+                        //gracz ma wystarczająco tlenu by zaatakować
                         if (fighter1Oxygen - ((0.1) * fighter1.strenght) > 0)
                         {
                             string beginning = Boxers.RandomString(StringLists.beginning);
@@ -105,10 +106,11 @@ namespace projektKoncowy
                                             Console.WriteLine($"{fighter1.name} {fatality}, koniec walki\n");
                                         }
                                     }
-                                    //brak tlenu
+                                    //brak tlenu na kontrę
                                     else
                                     {
-                                        Console.WriteLine($"{fighter2.name} dystansuje się\n");
+                                        string retreat = Boxers.RandomString(StringLists.retreat);
+                                        Console.WriteLine($"{fighter2.name} {retreat}\n");
                                         fighter1Oxygen += (fighter2.strenght * 2);
                                         fighter1Oxygen += (fighter1.condition * 0.75);
                                         fighter2Oxygen += (fighter2.condition * 0.75);
@@ -131,11 +133,43 @@ namespace projektKoncowy
                         //brak tlenu na atak gracza
                         else
                         {
-                            Console.WriteLine($"{fighter1.name} dystansuje się\n");
-                            fighter1Oxygen += (fighter1.strenght * 2);
-                            fighter1Oxygen += (fighter1.condition * 0.75);
-                            fighter2Oxygen += (fighter2.condition * 0.75);
-                            action++;
+                            //przeciwnik wykorzystuje brak tlenu gracza
+                            if ((fighter1Oxygen < fighter2Oxygen))
+                            {
+                                string lackOfOxygen = Boxers.RandomString(StringLists.lackOfOxygen);
+                                string beginning = Boxers.RandomString(StringLists.beginning);
+                                string moves = Boxers.RandomString(StringLists.moves);
+                                string targets = Boxers.RandomString(StringLists.targets);
+                                Console.WriteLine($"{fighter1.name} {lackOfOxygen}");
+                                Console.WriteLine($"{fighter2.name} {beginning} {moves} {targets}");
+                                fighter2Oxygen -= (((fighter2.strenght) * 1.5) * rounds);
+                                fighter1Life -= fighter2.strenght;
+                                action++;
+                                aIPoints += 2;
+                                fighter1Oxygen += (fighter1.condition * 0.75);
+                                fighter2Oxygen += (fighter2.condition * 0.75);
+                                if (fighter1Life > 0)
+                                {
+                                    string beingInjured = Boxers.RandomString(StringLists.beingInjured);
+                                    string continuingTheFight = Boxers.RandomString(StringLists.continuingTheFight);
+                                    Console.WriteLine($"{fighter1.name} {beingInjured} {continuingTheFight}\n");
+                                }
+                                else
+                                {
+                                    string fatality = Boxers.RandomString(StringLists.fatality);
+                                    Console.WriteLine($"{fighter1.name} {fatality}, koniec walki\n");
+                                }
+                            }
+                            else
+                            {
+                                //przeciwnik nie jest w stanie wykorzystać braku tlenu gracza
+                                string retreat = Boxers.RandomString(StringLists.retreat);
+                                Console.WriteLine($"{fighter1.name} {retreat}\n");
+                                fighter1Oxygen += (fighter1.strenght * 2);
+                                fighter1Oxygen += (fighter1.condition * 0.75);
+                                fighter2Oxygen += (fighter2.condition * 0.75);
+                                action++;
+                            }
                         }
                     }
 
@@ -223,13 +257,47 @@ namespace projektKoncowy
                                 }
                             }
                         }
+                        //przeciwnik nie ma tlenu
                         else
                         {
-                            Console.WriteLine($"{fighter2.name} dystansuje się\n");
-                            fighter2Oxygen += (fighter2.strenght * 2);
-                            fighter1Oxygen += (fighter1.condition * 0.75);
-                            fighter2Oxygen += (fighter2.condition * 0.75);
-                            action++;
+                            //gracz wykorzystuje brak tlenu u przeciwnika
+                            if ((fighter2Oxygen < fighter1Oxygen))
+                            {
+                                string lackOfOxygen = Boxers.RandomString(StringLists.lackOfOxygen);
+                                string beginning = Boxers.RandomString(StringLists.beginning);
+                                string moves = Boxers.RandomString(StringLists.moves);
+                                string targets = Boxers.RandomString(StringLists.targets);
+                                Console.WriteLine($"{fighter2.name} {lackOfOxygen}");
+                                Console.WriteLine($"{fighter1.name} {beginning} {moves} {targets}");
+                                fighter1Oxygen -= (((fighter1.strenght) * 1.5) * rounds);
+                                fighter2Life -= fighter1.strenght;
+                                action++;
+                                playerPoints += 2;
+                                fighter1Oxygen += (fighter1.condition * 0.75);
+                                fighter2Oxygen += (fighter2.condition * 0.75);
+                                if (fighter2Life > 0)
+                                {
+                                    string beingInjured = Boxers.RandomString(StringLists.beingInjured);
+                                    string continuingTheFight = Boxers.RandomString(StringLists.continuingTheFight);
+                                    Console.WriteLine($"{fighter2.name} {beingInjured} {continuingTheFight}\n");
+                                }
+                                else
+                                {
+                                    string fatality = Boxers.RandomString(StringLists.fatality);
+                                    Console.WriteLine($"{fighter2.name} {fatality}, koniec walki\n");
+                                }
+                            }
+                            // gracz nie jest w stanie wykorzystać braku tlenu przeciwnika
+                            else
+                            {
+                                //przeciwnik nie jest w stanie wykorzystać braku tlenu gracza
+                                string retreat = Boxers.RandomString(StringLists.retreat);
+                                Console.WriteLine($"{fighter2.name} {retreat}\n");
+                                fighter1Oxygen += (fighter2.strenght * 2);
+                                fighter1Oxygen += (fighter2.condition * 0.75);
+                                fighter2Oxygen += (fighter1.condition * 0.75);
+                                action++;
+                            }
                         }
                     }
 
@@ -242,7 +310,7 @@ namespace projektKoncowy
                         fighter1Oxygen -= (fighter1.strenght * 1.5);
                         fighter2Oxygen -= (fighter2.strenght * 1.5);
                         action+=2;
-                        playerPoints+=2;
+                        playerPoints++;
                         aIPoints++;
                     }
 
